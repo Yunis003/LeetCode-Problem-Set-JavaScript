@@ -2,28 +2,31 @@
  * @param {Object|Array} obj
  * @return {Object|Array}
  */
-var compactObject = function(obj) {
-    const resObj = Object.values(obj);
- 
-    resObj.forEach((element)=>{
-        const result = []
-        if(Boolean(element)){
-            if(Array.isArray(obj)){
-                result.push(element);
+var compactObject = function(obj) { 
+    
+    function helperFunc(obj){
+        if (!obj) return false;
+        if (typeof obj !== 'object') return obj;
+        if (Array.isArray(obj)){
+            const resArr = [];
+            for (let i = 0; i < obj.length; i++){
+                const curr = obj[i];
+                const subArr = helperFunc(curr)
+                if (subArr){
+                    resArr.push(subArr);
+                }
             }
+            return resArr;
         }
-        return result;
-    })
 
-    resObj.forEach((element, key)=>{
-        const result2 = {};
-        if(Boolean(element)){
-            if(typeof obj === 'object'){
-                result2[key] = element
+        const resObj = {};
+        for (const key in obj){
+            const subRes = helperFunc(obj[key]);
+            if(subRes){
+                resObj[key] = subRes;
             }
         }
-        return result2
-    })
+        return resObj;
     }
-
+    return helperFunc(obj);
 };

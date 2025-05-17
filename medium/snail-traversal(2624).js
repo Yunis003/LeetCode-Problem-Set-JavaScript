@@ -5,16 +5,28 @@
  */
 Array.prototype.snail = function(rowsCount, colsCount) {
     if (rowsCount * colsCount !== this.length) return [];
-    let resArr = new Array();
-    
-    for (let i = 0, length = rowsCount; i < length; i++){
-        let cols = new Array();
-        for(let j = 0, length = colsCount; j < rowsCount; j++){
-            cols.push(this[j]);
-        }
-        resArr.push(cols)
+    const arr = this;
+    const res = new Array(rowsCount).fill(0).map(()=> new Array(colsCount).fill(0));
+    let reversed= false;
+
+    let row;
+    let col;
+    for (let i = 0, length = this.length; i < length; i++){
+        row = !reversed ? i % rowsCount : rowsCount - 1 - (i % rowsCount);
+        col = Math.floor(i / rowsCount);
+
+        res[row][col] = arr[i];
+
+        if (i % rowsCount === rowsCount - 1) reversed = !reversed;
     }
-    return resArr
+    // for (let i = 0, length = rowsCount; i < length; i++){
+    //     for(let j = 0, length = colsCount; j < length; j++){
+    //         res.push(this[j]);
+    //     }
+    //     arr.push(res)
+    // }
+    // return arr;
+    return res
 }
 
 /**

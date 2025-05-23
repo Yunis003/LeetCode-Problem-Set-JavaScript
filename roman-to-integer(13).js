@@ -11,13 +11,23 @@ var romanToInt = function(s) {
         "C": 100,
         "D": 500,
         "M": 1000
-    };
-    let outputInt = 0;
-    const romanArray = s.split("");
-    romanArray.forEach((element)=>{
-        if (romanInts[element]){
-            outputInt += romanInts[element];
+    }
+    let res = 0;
+
+    for (let i = 0, length = s.length; i < length; i++){
+        const currentRoman = s[i];
+        const currentInteger = romanInts[s[i]];
+        const nextRoman = s[i + 1];
+        const nextInteger = romanInts[s[i + 1]];
+
+        if (currentInteger < nextInteger){
+            res -= currentInteger;
         }
-    })
-    return outputInt;
+    // MCMXCIV
+    // LVIII
+        else{
+            res += currentInteger;
+        }
+    }
+    return res;
 };

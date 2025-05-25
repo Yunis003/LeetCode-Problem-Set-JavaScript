@@ -3,16 +3,14 @@
  * @return {Generator}
  */
 var inorderTraversal = function*(arr) {
-    let resArray = []
-    for (let i = 0, length = arr.length; i < length; i++){
-        if (Array.isArray(arr[i])){
-            for (let j = 0, length = arr[i].length; j < length; j++){
-                resArray.push(arr[i][j])
-            }
+    for (let element of arr){
+        if (Array.isArray(element)){
+            yield* inorderTraversal(element);
         }
-        resArray.push(arr[i]);
+        else{
+            yield element;
+        }
     }
-    yield resArray
 };
 
 /**
